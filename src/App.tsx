@@ -327,6 +327,18 @@ export default function App() {
       return
     }
 
+    if (!window.isSecureContext) {
+      setMicState('error')
+      setMicError('Microphone needs HTTPS on iPhone/iPad. Open this app over HTTPS or localhost.')
+      return
+    }
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setMicState('error')
+      setMicError('This browser does not expose microphone access here. On iPhone/iPad, use Safari over HTTPS.')
+      return
+    }
+
     try {
       setMicState('requesting')
       setMicError('')
